@@ -1,0 +1,13 @@
+{
+  "name": "extension-image-select",
+  "url": "",
+  "license": "MIT",
+  "tags": ["photo", "gallery", "image"],
+  "description": "Select image from mobile gallery",
+  "version": "0.5.0",
+  "releasenote": "iOS support",
+  "contributors": ["buble"],
+  "dependencies": {
+
+  }
+}
