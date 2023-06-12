@@ -51,16 +51,12 @@ extern "C" void sendImageSelectEvent(const char* type, unsigned char* data, unsi
 	buffer b = alloc_buffer_len (length);
 	unsigned char* data_ = (unsigned char*)buffer_data (b);
 
-    bytes = buffer_val (b);
-
-	for (int i = 0; i < length; i++) {
-		data_[i] = data[i];
-	}
+	bytes = buffer_val (b);
+	memcpy(data_, data, length*sizeof(unsigned char));
 
 	value o = alloc_empty_object();
 	alloc_field(o,val_id("type"),safe_alloc_string(type));
 	alloc_field(o,val_id("data"),bytes);
-	
 
 	val_call1(imageSelectEventHandle->get(), o);
 }

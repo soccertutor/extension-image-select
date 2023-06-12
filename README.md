@@ -1,16 +1,17 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE.md)
 
 # extension-image-select
-Selecting image from camera roll/gallery on mobile devices
-
+Extension calls native iOS/Android photo gallery and pass image to HaXe
+iOS - works 
+Android - wip
 
 # Installation
 
-You can easily install extension-image-select using haxelib:
+You can install extension-image-select using haxelib:
 
 	haxelib git extension-image-select https://github.com/soccertutor/extension-image-select
     
-	lime rebuild extension-image-select ios -arm64 -armv6 -armv7 -clean
+	lime rebuild extension-image-select ios
 
 
 To add it to a Lime or OpenFL project, add this to your project file:

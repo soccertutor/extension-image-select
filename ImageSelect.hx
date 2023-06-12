@@ -52,11 +52,10 @@ class ImageSelect {
 
 		var type = Std.string (Reflect.field (inEvent, "type"));
 
-		trace("EVENT COME", type);
 		switch (type) {
 			case ImageSelectEvent.IMAGE_SELECTED:
 				var data = Reflect.field (inEvent, "data");
-				var length = Std.int (Reflect.field (inEvent, "length"));
+				//var length = Std.int (Reflect.field (inEvent, "length"));
 		
 				var array:Array<Int> = cast data;
 				var byteArray:openfl.utils.ByteArray = new openfl.utils.ByteArray();
@@ -64,11 +63,6 @@ class ImageSelect {
 				for (i in array) {
 					byteArray.writeByte(i);
 				}
-				//trace(array[0]);
-				//var bytes = @:privateAccess new haxe.io.Bytes (length, data);
-//trace("bytes ", bytes);
-				//var byteArray:openfl.utils.ByteArray = cast bytes;
-trace("byteArray", Type.typeof(data));
 				var event:ImageSelectEvent = new ImageSelectEvent(ImageSelectEvent.IMAGE_SELECTED, byteArray);
 				dispatchEvent(event);
 			case ImageSelectEvent.IMAGE_CANCELED:
@@ -77,29 +71,6 @@ trace("byteArray", Type.typeof(data));
 			default:
 
 		}
-/*
-		switch (type) {
-			case "downloadProgress":
-
-				var e:IAPEvent = new IAPEvent (IAPEvent.DOWNLOAD_PROGRESS,  Reflect.field (inEvent, "productID"), null, null,  Reflect.field (inEvent, "transactionID"));
-				e.downloadPath = Reflect.field (inEvent, "downloadPath");
-				e.downloadVersion = Reflect.field (inEvent, "downloadVersion");
-				e.downloadProgress = Reflect.field (inEvent, "downloadProgress");
-				dispatchEvent (e);
-
-			case "downloadComplete":
-
-				var e:IAPEvent = new IAPEvent (IAPEvent.DOWNLOAD_COMPLETE,  Reflect.field (inEvent, "productID"), null, null,  Reflect.field (inEvent, "transactionID"));
-				e.downloadPath = Reflect.field (inEvent, "downloadPath");
-				e.downloadVersion = Reflect.field (inEvent, "downloadVersion");
-				dispatchEvent (e);
-
-
-
-			default:
-
-		}
-*/
 	}
 
 	public static function addEventListener (type:String, listener:Dynamic, useCapture:Bool = false, priority:Int = 0, useWeakReference:Bool = false):Void {
