@@ -2,8 +2,8 @@
 
 # extension-image-select
 Extension calls native iOS/Android photo gallery and pass image to HaXe
-iOS - works 
-Android - wip
+- iOS - works 
+- Android - wip
 
 # Installation
 
