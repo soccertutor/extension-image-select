@@ -10,40 +10,17 @@ import events.ImageSelectEvent;
 
 class ImageSelect {
 	
-	private static var dispatcher = new EventDispatcher ();
+	public static var dispatcher = new EventDispatcher ();
 
 	public static function selectImage ():Void {
-		
-		#if android
-		
-		//TODO:
-		
-		/*
-		var resultJNI = extension_image_select_sample_method_jni(inputValue);
-		var resultNative = extension_image_select_sample_method(inputValue);
-		
-		if (resultJNI != resultNative) {
-			
-			throw "Fuzzy math!";
-			
-		}
-		
-		return resultNative; */
-		
-		#else
-		
 		return extension_image_select_select_image();
-		
-		#end
-		
 	}
 	
 	public static function initialize():Void {
 		#if android
-		//TODO:
+		return extension_image_select_initialize(new AndroidHandler());
 		#else
-		set_event_handle (notifyListeners);
-
+		set_event_handle(notifyListeners);
 		return extension_image_select_initialize();
 		#end
 	}
@@ -97,16 +74,40 @@ class ImageSelect {
 	}
 
 
-	
+	#if ios
 	private static var set_event_handle = CFFI.load ("extension_image_select", "extension_image_select_set_event_handle", 1);
 
 	private static var extension_image_select_initialize = CFFI.load ("extension_image_select", "extension_image_select_initialize", 0);
-	
 	private static var extension_image_select_select_image = CFFI.load ("extension_image_select", "extension_image_select_select_image", 0);
 	
-	#if android
-	private static var extension_image_select_sample_method_jni = JNI.createStaticMethod ("org.haxe.extension.Extension_image_select", "sampleMethod", "(I)I");
+	#elseif android
+
+	private static var extension_image_select_initialize = JNI.createStaticMethod ("org.haxe.extension.ExtensionImageSelect", "initialize", "(Lorg/haxe/lime/HaxeObject;)V");
+	private static var extension_image_select_select_image = JNI.createStaticMethod ("org.haxe.extension.ExtensionImageSelect", "selectImage", "()V");
+
 	#end
 	
-	
+}
+
+
+private class AndroidHandler {
+
+	public function new () { }
+
+	public function onImageSelected (data:Dynamic):Void {
+		var array:Array<Int> = cast data;
+		var byteArray:openfl.utils.ByteArray = new openfl.utils.ByteArray();
+
+		for (i in array) {
+			byteArray.writeByte(i);
+		}
+		var event:ImageSelectEvent = new ImageSelectEvent(ImageSelectEvent.IMAGE_SELECTED, byteArray);
+		ImageSelect.dispatcher.dispatchEvent(event);
+	}
+
+	public function onImageCanceled (data:Dynamic):Void {
+		var event:ImageSelectEvent = new ImageSelectEvent(ImageSelectEvent.IMAGE_CANCELED);
+		ImageSelect.dispatcher.dispatchEvent(event);
+	}
+
 }

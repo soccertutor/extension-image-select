@@ -6,6 +6,6 @@
 	<!-- Use the following for an Android Java extension, not needed otherwise -->
 	
 	<dependency name="extension_image_select" path="dependencies/android" if="android" />
-	<android extension="org.haxe.extension.Extension_image_select" />
+	<android extension="org.haxe.extension.ExtensionImageSelect" />
 	
 </project>
